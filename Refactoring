@@ -1,4 +1,6 @@
 ::在Object-oriented中，绝大多数情况建议用多态/State代替switch-case
+  当switch-case只是用于判断ID，跟多态无关，但是case又过多时，应使用查找算法，因为switch-case是线性的
+  http://m.blog.csdn.net/article/details?id=8860587
 
 ::Extract Method， 当一个method中的一段代码可以组织成一个独立函数的时候，就应当提取出来成独立方法
 
