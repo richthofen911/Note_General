@@ -16,3 +16,14 @@
     return (basePrice > 1000)
   应该改为
     return (anOrder.basePrice() > 1000)
+    
+::introduce explaining variable
+  假如你有一个复杂的表达式， 将该复杂表达式(或其中一部分)的结果放进一个临时变量,以此变量名称来解释表达式用途。
+  这样可以使代码可读性增强
+  
+::Remove Assignments to Parameters  
+  如果代码里有对一个参数进行赋值的动作，要立即去掉
+  
+::Replace Method with Method Object
+  你有一个大型函数,其中对局部变量的使用,使你无法实行 Extract Method。将这个函数放进一个单独对象中,如此一来局部变量就
+  成了对象内的值域(field)。然后你可以在同一个对象中将这个大型函数分解为数个小型函数
