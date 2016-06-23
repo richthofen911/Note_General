@@ -27,3 +27,23 @@
 ::Replace Method with Method Object
   你有一个大型函数,其中对局部变量的使用,使你无法实行 Extract Method。将这个函数放进一个单独对象中,如此一来局部变量就
   成了对象内的值域(field)。然后你可以在同一个对象中将这个大型函数分解为数个小型函数
+
+::move method
+  如果有个函数与其所在类之外的另一个类进行更多的交流：调用后者，或被或者调用
+    那么应该把这个函数移到另外这个类中
+    
+::move field
+  具体同move method
+  
+::extract class
+  如果某个类做了应该由两个类做的事，应该建一个新的类，把功能提炼出来
+  
+::inline class
+  如果某个类没有做太多事，没有承担足够责任，不再有单独存在的理由，就应该将它塞到另一个类中（此情况多发生于上一轮重构之后)
+  
+::hide delegate 隐藏委托关系
+  
+::remove middle man
+
+::change bidirectional association to unidirectional
+  取消两个类之间不必要的关联
