@@ -58,3 +58,8 @@
 
 ::replace record with data class
   
+::separate Query from Modifier
+  如果某个函数既返回对象状态，又修改对象状态
+    那么应该把它拆解成两个函数，一个负责查询，一个负责修改
+  *** 在多线程并发时，将修改和查询分开会麻烦一些，需要用到第三个函数来同时这两件事，这第三个函数要调用前两个独立函数，且
+      这个第三个函数要声明为synchronized
