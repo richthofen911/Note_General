@@ -47,3 +47,14 @@
 
 ::change bidirectional association to unidirectional
   取消两个类之间不必要的关联
+
+::replace Magic Number with symbolic constant
+  magic number是历史最悠久的不良现象之一，这些magic number拥有特殊意义，却又不能明确表现出其意义，会极大降低可读性
+  
+::encapsulate field 封装字段
+  data被声明为public是一种不好的做法，这样会降低模块化程度
+  
+::在OO中，少用数组多用集合
+
+::replace record with data class
+  
