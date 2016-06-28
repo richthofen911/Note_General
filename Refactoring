@@ -86,4 +86,16 @@
 ::encapsulate downcast
   某个函数入返回的对象，需要由函数调用者执行downcast，那么应该将downcast动作转移到函数中
 
-::  
+::处理概括关系
+  1)  pull up fields/methods
+  2)  pull up constructor body
+  3)  push down fields/methods
+  4)  extract subclass(提炼子类),类中某些特性之被某些（而非全部）实例用到，那么应该新建一个字类，将这些特性移到子类中
+  5)  extract superclass 将具有相同特性的类提炼出一个超类
+  6)  collapse hierarchy 折叠继承体系。如果超类和子类之间无太大区别，应该将他们合并
+  7） form template method(塑造模板函数）
+  8） replace inheritance with delegation 某个子类只使用超类接口中的一部分，或根本不需要继承来的数据的时候
+        应当在子类中新建一个字段用以保存超类，调整子类函数，令它改而委托超类，然后去掉两者之间的继承关系
+      replace delegato with inheritance
+      
+  
