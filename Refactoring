@@ -63,3 +63,27 @@
     那么应该把它拆解成两个函数，一个负责查询，一个负责修改
   *** 在多线程并发时，将修改和查询分开会麻烦一些，需要用到第三个函数来同时这两件事，这第三个函数要调用前两个独立函数，且
       这个第三个函数要声明为synchronized
+
+::replace parameter with explicit methods
+  如果你又一个函数，其中完全取决于参数值儿采取不同行为，比如
+  void setVlue(String name, int value){
+    if(name.equals("height")
+      _height = value;
+      return;
+    if(name.equals("width")
+      _width = value;
+      return
+  }
+  则应该把它拆开，怎对每一个可能值，单独建立函数
+    void setHeight(int arg)
+    void setWidth(int arg）
+  
+::尽量保持对象完整
+  如果你从某个对象取出若干值，将它们作为某一次函数调用时的参数，那么不如改为传递整个对象
+
+::remove setting method if it won't be used at all and use 'final' before the variable to make it clear
+
+::encapsulate downcast
+  某个函数入返回的对象，需要由函数调用者执行downcast，那么应该将downcast动作转移到函数中
+
+::  
