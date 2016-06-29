@@ -1,0 +1,37 @@
+ref: http://www.cnblogs.com/LBSer/p/4853234.html
+*** RPC几乎是每一个从学校进入互联网公司的同学都要首先学习的框架，之前面试过一个在大型互联网公司工作过两年的同学，
+对RPC还是停留在使用层面，这是不应该的，希望大家不仅要会用而且要知道内部的原理。***
+
+一旦踏入公司尤其是大型互联网公司就会发现，公司的系统都由成千上万大大小小的服务组成，各服务部署在不同的机器上，由不同的
+团队负责。这时就会遇到两个问题：
+  1）要搭建一个新服务，免不了需要依赖他人的服务，而现在他人的服务都在远端，怎么调用？
+  2）其它团队要使用我们的新服务，我们的服务该怎么发布以便他人调用?
+  
+大家都写过不少程序，比如写个hello world服务类，然后本地调用下，如下所示。
+public interface HelloWorldService {
+    String sayHello(String msg);
+}
+
+public class HelloWorldServiceImpl implements HelloWorldService {
+    @Override
+    public String sayHello(String msg) {
+        String result = "hello world " + msg;
+        System.out.println(result);
+        return result;
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+       HelloWorldService helloWorldService = new HelloWorldServiceImpl();
+       helloWorldService.sayHello("test");
+    } 
+}
+
+这些程序的特点是服务消费方和服务提供方是本地调用关系。
+由于各服务部署在不同机器，服务间的调用免不了网络通信过程，服务消费方每调用一个服务都要写一坨网络通信相关的代码，不仅复杂
+而且极易出错。如果有一种方式能让我们像调用本地服务一样调用远程服务，而让调用者对网络通信这些细节透明，那么将大大提高
+生产力，比如服务消费方在执行helloWorldService.sayHello("test")时，实质上调用的是远端的服务。这种方式其实就是
+RPC（Remote Procedure Call），在各大互联网公司中被广泛使用，如阿里巴巴的hsf、dubbo（开源）、
+Facebook的thrift（开源）、Google grpc（开源）、Twitter的finagle（开源）等。
+
