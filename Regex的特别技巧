@@ -1,0 +1,9 @@
+:: How to split a string, but also keep the delimiters?
+   
+    You can use Lookahead and Lookbehind. Like this:
+    System.out.println(Arrays.toString("a;b;c;d".split("(?<=;)")));
+       output:   [a;, b;, c;, d]
+    System.out.println(Arrays.toString("a;b;c;d".split("(?=;)")));
+       output:   [a, ;b, ;c, ;d]
+    System.out.println(Arrays.toString("a;b;c;d".split("((?<=;)|(?=;))")));
+       output:   [a, ;, b, ;, c, ;, d] 
