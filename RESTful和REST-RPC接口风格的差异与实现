@@ -1,0 +1,51 @@
+参考 http://blog.csdn.net/skyshore/article/details/51130139
+
+REST风格的接口设计是以资源为核心，这种设计风格非常简约，也利于理解，比如获取一个id为259的商户，其HTTP请求应该像这样：
+  GET /Store/259
+
+REST-RPC风格则是以操作为核心，一般只使用HTTP谓词GET或POST，比如同样的操作，其HTTP请求像这样：
+  GET /Store.get?id=259
+
+如果用接口原型来描述这一操作，则这两种风格都实现了同一个原型：
+  Store.get(id) -> Store
+  
+可见，对同一个操作来说，REST-RPC风格与REST风格的URL是很容易转换的；两者只是请求形式不同，对其处理是完全等价的。
+
+其他操作例子：
+添加对象
+  接口原型：
+    Store.add()(name, addr?)
+  REST风格实现：
+    POST /Store
+    name=华莹小吃&addr=银科路99号
+  REST-RPC风格实现：
+    POST /Store.add
+    name=华莹小吃&addr=银科路99号
+
+更新对象
+  接口原型：
+    Store.set(id)(name?, addr?)
+  REST风格实现：
+    PATCH /Store/259
+    addr=银科路88号
+  REST-RPC风格实现：
+    POST /Store.set?id=259
+  addr=银科路88号
+  
+查询列表
+  接口原型：
+    Store.query() -> [ Store ]
+  REST风格：
+    GET /Store
+      或
+    GET /Store/
+  REST-RPC风格：
+    GET /Store.query
+    
+删除对象
+  接口原型：
+    Store.del(id)
+  REST风格：
+    DELETE /Store/259
+  REST-RPC风格：
+    GET /Store.del?id=259
