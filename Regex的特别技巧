@@ -7,3 +7,9 @@
        output:   [a, ;b, ;c, ;d]
     System.out.println(Arrays.toString("a;b;c;d".split("((?<=;)|(?=;))")));
        output:   [a, ;, b, ;, c, ;, d] 
+       
+:: Regex lookaround的技巧（接上一条）
+      (?=.....)  让子表达式匹配右侧文本
+      (?!.....)  让子表达式不匹配右侧文本
+      (?<=....)  让子表达式匹配左侧文本
+      (?<!....)  让子表达式不匹配左侧文本
