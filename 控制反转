@@ -1,0 +1,44 @@
+控制反转（Inversion of Control，英文缩写为IoC）
+是一个重要的面向对象编程的法则来削减计算机程序的耦合问题，也是轻量级的Spring框架的核心。 
+控制反转一般分为两种类型，
+  依赖注入（Dependency Injection，简称DI）和
+  依赖查找（Dependency Lookup）。
+依赖注入应用比较广泛。
+
+IoC可以认为是一种全新的设计模式，但是理论和时间成熟相对较晚，并没有包含在GoF中。
+对象在被创建的时候，由一个调控系统内所有对象的外界实体将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。
+所以，控制反转是，关于一个对象如何获取他所依赖的对象的引用，这个责任的反转。
+
+发展过程
+
+Interface Driven Design接口驱动，接口驱动有很多好处，可以提供不同灵活的子类实现，增加代码稳定和健壮性等等，
+但是接口一定是需要实现的，也就是如下语句迟早要执行：AInterface a = new AInterfaceImp(); 
+这样一来，耦合关系就产生了，如：
+  classA{
+      AInterface a;
+   
+      A(){}
+       
+      AMethod()//一个方法{
+          a = new AInterfaceImp();
+      }
+  }
+  
+Class A与AInterfaceImp就是依赖关系，如果想使用AInterface的另外一个实现就需要更改代码了。
+当然我们可以建立一个Factory来根据条件生成想要的AInterface的具体实现，即：
+  InterfaceImplFactory{
+     AInterface create(Object condition){
+        if(condition = condA)
+            return new AInterfaceImpA();
+        else if(condition = condB)
+            return new AInterfaceImpB();
+        else
+            return new AInterfaceImp();
+      }
+  }
+  
+  可以把IoC模式看做是工厂模式的升华，可以把IoC看作是一个大工厂，只不过这个大工厂里要生成的对象都是在XML文件中给出定义的，
+  然后利用Java 的“反射”编程，根据XML中给出的类名生成相应的对象。从实现来看，IoC是把以前在工厂方法里写死的对象生成代码，
+  改变为由XML文件来定义，也就是把工厂和对象生成这两者独立分隔开来，目的就是提高灵活性和可维护性。
+  
+  
