@@ -1,0 +1,39 @@
+::Cooked vs. Raw sockets (http://www.packetlevel.ch/html/scapy/scapy3way.html)
+
+Normally, the Linux kernel takes care of setting up and sending and receiving network traffic. It automatically sets 
+appropriate header values and even knows how to complete a TCP 3 way handshake. Uising the kernel services in this way 
+is using a "cooked" socket.
+Scapy does not use these kernel services. It creates a "raw" socket. The entire TCP/IP stack of the OS is circumvented. 
+Because of this, Scapy give us compete control over the traffic. Traffic to and from Scapy will not be filtered by iptables.
+Also, we will have to take care of the TCP 3 way handshake ourselves.
+
+We send on the wireshark or tcpdump capture following packets:
+- SYN (outgoing)
+- SYN ACK(incomming)
+- RST/ACK (outgonig)
+
+
+The RST Packet is from the Kernel, because no listen Port on the Source Port. (Scapy is not unsing RAW Socket)
+ 
+iptables to supress the RST
+------------------
+	iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {our IP} -d {dest IP} -dport {source port} -j DROP
+	iptables -A OUTPUT -s {our IP} -d {dest IP} -p ICMP --icmp-type port-unreachable -j DROP
+------------------
+
+Sample Script
+ 
+#!/usr/bin/python
+from scapy.all import *
+
+ip=IP(src="10.0.0.1", dst="20.0.0.2")
+TCP_SYN=TCP(sport=1500, dport=80, flags="S", seq=100)
+TCP_SYNACK=sr1(ip/TCP_SYN)
+
+my_ack = TCP_SYNACK.seq + 1
+TCP_ACK=TCP(sport=1500, dport=80, flags="A", seq=101, ack=my_ack)
+send(ip/TCP_ACK)
+
+my_payload="space for rent!"
+TCP_PUSH=TCP(sport=1500, dport=80, flags="PA", seq=102, ack=my_ack)
+send(ip/TCP_PUSH/my_payload)
