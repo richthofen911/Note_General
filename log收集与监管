@@ -1,0 +1,12 @@
+Elasticsearch+Logstash+Kibana+Filebeat
+
+elasticsearch　是开源的全文搜索引擎
+logstash  分布式日志收集框架
+kibana　负责实现数据可视化
+filebeat 本原理其实就是有一群prospector，每个prospector手下管着一批harvester，每个harvester负责监视一个日志文件，
+         把变动的内容由spooler汇总之后交给Logstash或者Elasticsearch。
+       
+如果想快速搭建一个可以工作的Filebeat，无非有三点：
+ 1. 说明要监视哪些文件
+ 2. 说明收集的日志发给谁
+ 3. （如果是发给elasticesearch)让Elasticsearch知道如何处理每个日志事件。
