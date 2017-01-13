@@ -1,0 +1,15 @@
+常见基本架构
+
+Nginx做第一道反向代理，负责均衡负载，
+  常见调度算法
+    round-robin
+    weightedRound-robin
+    weightedLeast-connection   加权最小连接调度
+    DestinationHashing         目标地址散列调度
+    SourceHashing    源地址调度
+   
+  常见问题
+    sesssion 共享. final solution: use a separated session server
+    
+    
+其他web服务器如tomcat做实际处理
