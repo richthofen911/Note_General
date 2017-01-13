@@ -1,3 +1,5 @@
+https://gist.github.com/suziewong/4476248
+
 常见基本架构
 
 Nginx做第一道反向代理，负责均衡负载，
