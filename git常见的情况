@@ -1,7 +1,35 @@
 １．如果我一次提交信息写错了，怎么修正？
+    最一般的，如果没有push:
+        如果没有新的commit， git commit --amend 可以直接对上一次提交进行修正
+        如果有新的commit，   git reset --soft xxx(有错误的那次commit id), 然后再 git commit. 此时后面所有的commit都会成为一次新commit
+        如果想保持每次提交独立的话，可以单独建立个tmp分支修改说明，然后将后面的提交一个一个地cherry-pick到新分支，然后删除掉旧分支
+        git checkout -b tmp ^xxx
+        git cherry-pick xxx
+        git commit --amend
+        git cherry-pick <依次后面的提交id>
+    如果已经push，一般用户想修改的话需要权限
+    
 ２．如何撤销一次 commit，使这次 commit 重新回到暂存区？
+      先用git log查看 commit 日志， 找到需要撤销的那次 commit 的哈希值
+      然后 git reset --hard commit_id 即可回退
+        说明： git rest -soft 回退到某个版本，只回退了commit信息，不会恢复到index file一级，如果还要提交，直接commit就行
+              git reset -hard  彻底回退到某个版本，本地源码也会变为上一个版本内容
+        
 ３．如何给比较两次不同的提交，生成一个补丁文件，给自己的同事？
-４．如何同事向两个远端仓库提交代码，一个在Github，另一个在公司的Gitlab服务器
+      git diff xxx xxx --name-only     (--name-only参数可以只显示文件名)
+      
+４．如何同时向两个远端仓库提交代码，一个在Github，另一个在公司的Gitlab服务器
+      每个远端添加一个remote
+      push的时候 git push all --all
+      
 ５．如果我现在修改了一点东西，不想提交，但是在另一个分支上有一个紧急的 bug 需要你来修复，你会怎么做？
+    主要就是git stash, 可以获取你工作目录的中间状态,也就是修改过的被追踪的文件和暂存的变更,并将它保存到一个未完结变更的堆栈中，随时可以重新应用
+    git stash后当前工作目录就干净了，可以方便切换到别的分支
+    
+    回到stash的工作状态可以用 git stash apply, 返回栈顶的哪一个， 或者 git stash apply stash@{id}
+      
 ６．如何用最新的 master 分支覆盖自己的本地分支
+      git reset --hard
+      git pull
+
 ７．怎么 revert 一个 revert ，让他看起来像没有 revert 一样
